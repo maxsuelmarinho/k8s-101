@@ -263,3 +263,13 @@ $ kubectl create secret generic db-user-pass --from-file=./username.txt --from-f
 $ kubectl create secret generic mysql-pass --from-literal=password=MY_PASSWORD
 ```
 
+**Enable Heapster**
+
+```
+$ minikube addons enable heapster
+```
+
+```
+$ minikube addons open heapster
+```
+
