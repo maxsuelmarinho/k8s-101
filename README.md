@@ -256,3 +256,10 @@ NAME       STATUS   ROLES    AGE     VERSION
 minikube   Ready    master   2d15h   v1.12.4
 ```
 
+**Creating a secret**
+
+```
+$ kubectl create secret generic db-user-pass --from-file=./username.txt --from-file=./password.txt
+$ kubectl create secret generic mysql-pass --from-literal=password=MY_PASSWORD
+```
+
