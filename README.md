@@ -273,3 +273,8 @@ $ minikube addons enable heapster
 $ minikube addons open heapster
 ```
 
+**Creating namespace**
+
+```
+$ kubectl create namespace <name>
+```
