@@ -278,3 +278,37 @@ $ minikube addons open heapster
 ```
 $ kubectl create namespace <name>
 ```
+
+**Kubernetes Pods Autoscale**
+
+```
+$ kubectl autoscale deployment wordpress --cpu-percent=50 --min=1 --max=10
+horizontalpodautoscaler.autoscaling/wordpress autoscaled
+
+$ kubectl get hpa
+NAME        REFERENCE              TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+wordpress   Deployment/wordpress   <unknown>/50%   1         3         0          53s
+
+```
+
+```
+$ kubectl run -i --tty load-generator --image=busybox /bin/sh
+
+$ while true; do wget -q -O- http://wordpress.default.svc.cluster.local; done
+```
+
+**Audit policy**
+
+```
+$ minikube stop
+
+$ cp audit-policy.yaml ~/.minikube/addons/
+
+$ minikube start --extra-config=apiserver.Authorization.Mode=RBAC \
+  --extra-config=apiserver.Audit.LogOptions.Path=/var/logs/audit.log \
+  --extra-config=apiserver.Audit.PolicyFile=/etc/kubernetess/addons/audit-policy.yaml
+
+$ minikube ssh
+$ sudo bash
+$ cat /var/logs/audit.log | jq .
+```
